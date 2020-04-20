@@ -1,5 +1,6 @@
 package com.armydocs.server.domain.survey;
 
+import com.armydocs.server.domain.Unit;
 import com.armydocs.server.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -27,7 +28,7 @@ class AnswerTest {
         em.persist(survey);
         Question question = getQuestion(survey);
         em.persist(question);
-        User user = User.builder().name("준영").build();
+        User user = getUser();
         em.persist(user);
 
         AnswerId id = AnswerId.builder()
@@ -42,6 +43,13 @@ class AnswerTest {
         assertEquals(answerUser, user);
         assertEquals(answerQuestion, question);
         assertEquals(answer.getAnswerContent(), "육류");
+    }
+
+    private User getUser(){
+        Unit unit = Unit.builder().name("계룡대 근무지원단").build();
+        return User.builder()
+                .serialNumber("00-12341234")
+                .name("준영").phoneNumber("010-1234-5678").Unit(unit).build();
     }
 
     private Question getQuestion(Survey survey) {
