@@ -25,21 +25,10 @@ public class SurveyPeriod {
     }
 
     public void changeStartDate(LocalDateTime startDate){
-        validateChangeableDateTime();
         this.startDate = startDate;
     }
 
     public void changeEndDate(LocalDateTime endDate){
-        validateChangeableDateTime();
         this.endDate = endDate;
-    }
-
-    public void validateChangeableDateTime(){
-        if(LocalDateTime.now().isAfter(this.endDate)){
-            throw new InvaildTimeToChangeError("Survey is closed.");
-        }
-        if(LocalDateTime.now().isAfter(this.startDate)){
-            throw new InvaildTimeToChangeError("Survey is already in progress.");
-        }
     }
 }

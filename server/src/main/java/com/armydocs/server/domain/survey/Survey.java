@@ -27,7 +27,6 @@ public class Survey extends BaseTimeEntity {
     }
 
     public void changeDescription(String description){
-        this.getSurveyPeriod().validateChangeableDateTime();
         this.description = description;
     }
 }

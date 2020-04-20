@@ -73,21 +73,6 @@ class QuestionTest {
         findQuestion.changeContent("제일 싫어하는 음식은?");
     }
 
-    @Test
-    void changeContentAfterSurveyEnded(){
-        SurveyPeriod pastPeriod = getPeriod(LocalDateTime.now().minusDays(10));
-        Survey survey = getSurvey(pastPeriod);
-        em.persist(survey);
-        Question question = getQuestion(survey, "제일 좋아하는 급식은?");
-        em.persist(question);
-
-        Question findQuestion = em.find(Question.class, question.getId());
-
-        assertThrows(InvaildTimeToChangeError.class, ()-> {
-            findQuestion.changeContent("제일 싫어하는 음식은?");
-        });
-    }
-
     private Question getQuestion(Survey survey, String content) {
         return Question.builder().survey(survey)
                     .sequence(0)
@@ -96,20 +81,13 @@ class QuestionTest {
     }
 
     private Survey getSurvey() {
-        return getSurvey(getPeriod(LocalDateTime.now().plusDays(10)));
-    }
-
-    private Survey getSurvey(SurveyPeriod period) {
+        SurveyPeriod period = SurveyPeriod.builder()
+                .startDate(LocalDateTime.now().minusHours(10))
+                .endDate(LocalDateTime.now().plusHours(10))
+                .build();
         return Survey.builder()
                 .title("급식 만족도 조사")
                 .description("급식 질 개선을 위한 설문조사입니다.")
                 .surveyPeriod(period).build();
-    }
-
-    private SurveyPeriod getPeriod(LocalDateTime time) {
-        return SurveyPeriod.builder()
-                .startDate(time.minusHours(1))
-                .endDate(time.plusHours(1))
-                .build();
     }
 }

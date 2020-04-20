@@ -42,12 +42,10 @@ public class Question {
     }
 
     public void changeContent(String content){
-        survey.getSurveyPeriod().validateChangeableDateTime();
         this.content = content;
     }
 
     public void changeSequence(int sequence){
-        survey.getSurveyPeriod().validateChangeableDateTime();
         this.sequence = sequence;
     }
 
