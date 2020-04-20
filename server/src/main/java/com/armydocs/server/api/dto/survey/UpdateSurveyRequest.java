@@ -1,11 +1,7 @@
 package com.armydocs.server.api.dto.survey;
 
-import com.armydocs.server.domain.survey.Survey;
-import com.armydocs.server.domain.survey.SurveyPeriod;
-import com.armydocs.server.exception.InvaildTimeToChangeError;
 import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.*;
-import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.validation.constraints.NotBlank;
 import java.time.LocalDateTime;

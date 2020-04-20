@@ -1,5 +1,6 @@
 package com.armydocs.server.domain.survey;
 
+import com.armydocs.server.domain.User;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
@@ -8,6 +9,10 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
+import java.util.Arrays;
+import java.util.List;
+
+import static org.junit.jupiter.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -19,12 +24,33 @@ class AnswerTest {
     @Test
     public void saveAnswer(){
         Survey survey = getSurvey();
+        em.persist(survey);
+        Question question = getQuestion(survey);
+        em.persist(question);
+        User user = User.builder().name("준영").build();
+        em.persist(user);
+
+        AnswerId id = AnswerId.builder()
+                .qid(question.getId())
+                .uid(user.getId()).build();
+        Answer answer = Answer.builder()
+                .id(id).answerSeq(1).answerContent("육류").build();
+
+        User answerUser = em.find(User.class, answer.getId().getUid());
+        Question answerQuestion = em.find(Question.class, answer.getId().getQid());
+
+        assertEquals(answerUser, user);
+        assertEquals(answerQuestion, question);
+        assertEquals(answer.getAnswerContent(), "육류");
+    }
+
+    private Question getQuestion(Survey survey) {
         Question question = Question.builder().survey(survey)
                 .surveyType(SurveyType.SUBJECTIVE)
                 .content("제일 좋아하는 급식은?").build();
-
-        em.persist(survey);
-
+        List<String> food = Arrays.asList("육류", "어류", "조류");
+        food.forEach(f -> question.addQuestionItem(QuestionItem.builder().content(f).build()));
+        return question;
     }
 
     private Survey getSurvey() {

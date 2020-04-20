@@ -1,9 +1,6 @@
 package com.armydocs.server.domain.survey;
 
-import lombok.AccessLevel;
-import lombok.Builder;
-import lombok.EqualsAndHashCode;
-import lombok.NoArgsConstructor;
+import lombok.*;
 
 import javax.persistence.Column;
 import javax.persistence.Embeddable;
@@ -11,15 +8,16 @@ import java.io.Serializable;
 
 @EqualsAndHashCode(onlyExplicitlyIncluded = true)
 @NoArgsConstructor(access = AccessLevel.PROTECTED)
+@Getter
 @Embeddable
 public class AnswerId implements Serializable {
 
     @EqualsAndHashCode.Include
-    @Column(name = "user_id")
+    @Column(name = "user_id", nullable = false, updatable = false)
     private Long uid;
 
     @EqualsAndHashCode.Include
-    @Column(name = "question_item_id")
+    @Column(name = "question_item_id", nullable = false, updatable = false)
     private Long qid;
 
     @Builder

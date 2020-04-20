@@ -1,6 +1,5 @@
 package com.armydocs.server.domain.survey;
 
-import com.armydocs.server.exception.InvaildTimeToChangeError;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.context.SpringBootTest;
