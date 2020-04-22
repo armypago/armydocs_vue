@@ -9,7 +9,7 @@ import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -27,15 +27,15 @@ class SurveyTest {
 
         Survey findSurvey = em.find(Survey.class, survey.getId());
 
-        assertEquals(findSurvey.getTitle(), survey.getTitle());
-        assertEquals(findSurvey.getDescription(), survey.getDescription());
-        assertEquals(findSurvey.getSurveyPeriod(), survey.getSurveyPeriod());
+        assertThat(findSurvey.getTitle()).isEqualTo(survey.getTitle());
+        assertThat(findSurvey.getDescription()).isEqualTo(survey.getDescription());
+        assertThat(findSurvey.getSurveyPeriod()).isEqualTo(survey.getSurveyPeriod());
 
         survey.changeDescription(description);
         survey.getSurveyPeriod().changeEndDate(changedDateTime);
 
-        assertEquals(findSurvey.getDescription(), description);
-        assertEquals(findSurvey.getSurveyPeriod().getEndDate(), changedDateTime);
+        assertThat(findSurvey.getDescription()).isEqualTo(description);
+        assertThat(findSurvey.getSurveyPeriod().getEndDate()).isEqualTo(changedDateTime);
     }
 
     private Survey getSurvey() {

@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -27,7 +27,7 @@ class UserTest {
 
         User findUser = em.find(User.class, user.getId());
 
-        assertEquals(findUser, user);
+        assertThat(findUser).isEqualTo(user);
 
         // update
         Unit changeUnit = Unit.builder().name("계룡대 근무지원단").build();
@@ -39,8 +39,8 @@ class UserTest {
         user.changeUnit(changeUnit);
 
         User updatedUser = em.find(User.class, user.getId());
-        assertEquals(updatedUser.getName(), changeName);
-        assertEquals(updatedUser.getPhoneNumber(), changePhoneNumber);
-        assertEquals(updatedUser.getUnit(), changeUnit);
+        assertThat(updatedUser.getName()).isEqualTo(changeName);
+        assertThat(updatedUser.getPhoneNumber()).isEqualTo(changePhoneNumber);
+        assertThat(updatedUser.getUnit()).isEqualTo(changeUnit);
     }
 }

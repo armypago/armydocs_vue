@@ -7,7 +7,7 @@ import org.springframework.boot.test.context.SpringBootTest;
 import javax.transaction.Transactional;
 import javax.persistence.EntityManager;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @SpringBootTest
 @Transactional
@@ -32,18 +32,18 @@ class UnitTest {
         Unit findChildUnit = findUnit.getChildUnits().get(0);
         Unit findGrandChildUnit = findChildUnit.getChildUnits().get(0);
 
-        assertEquals(findUnit.getName(), unit.getName());
-        assertEquals(findChildUnit.getName(), childUnit.getName());
-        assertEquals(findGrandChildUnit.getName(), grandChildUnit.getName());
+        assertThat(findUnit.getName()).isEqualTo(unit.getName());
+        assertThat(findChildUnit.getName()).isEqualTo(childUnit.getName());
+        assertThat(findGrandChildUnit.getName()).isEqualTo(grandChildUnit.getName());
 
         // remove
         findChildUnit.removeChildUnit(grandChildUnit2);
-        assertEquals(findChildUnit.getChildUnits().size(), 1);
+        assertThat(findChildUnit.getChildUnits().size()).isEqualTo(1);
 
         // update
         unit.changeName("자근단");
         Unit updatedUnit = em.find(Unit.class, unit.getId());
 
-        assertEquals(updatedUnit.getName(), "자근단");
+        assertThat(updatedUnit.getName()).isEqualTo("자근단");
     }
 }

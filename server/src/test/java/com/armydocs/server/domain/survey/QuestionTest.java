@@ -8,11 +8,9 @@ import javax.persistence.EntityManager;
 import javax.transaction.Transactional;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -34,12 +32,12 @@ class QuestionTest {
         QuestionItem findQuestionItem = findQuestion.getQuestionItems().get(1);
         findQuestion.removeQuestionItem(findQuestionItem);
 
-        assertEquals(findQuestion.getContent(), question.getContent());
-        assertEquals(findQuestion.getSurvey(), survey);
-        assertEquals(findQuestion.getContent(), question.getContent());
-        assertEquals(findQuestion.getSurveyType(), question.getSurveyType());
-        assertEquals(findQuestion.getQuestionItems().size(), 2);
-        assertEquals(findQuestion.getQuestionItems().get(1).getContent(), "조류");
+        assertThat(findQuestion.getContent()).isEqualTo(question.getContent());
+        assertThat(findQuestion.getSurvey()).isEqualTo(survey);
+        assertThat(findQuestion.getContent()).isEqualTo(question.getContent());
+        assertThat(findQuestion.getSurveyType()).isEqualTo(question.getSurveyType());
+        assertThat(findQuestion.getQuestionItems().size()).isEqualTo(2);
+        assertThat(findQuestion.getQuestionItems().get(1).getContent()).isEqualTo("조류");
     }
 
     @Test
@@ -56,9 +54,9 @@ class QuestionTest {
         questions.get(1).changeSequence(0);
         questions.get(2).changeSequence(1);
 
-        assertEquals(questions.get(0).getSequence(), 2);
-        assertEquals(questions.get(1).getSequence(), 0);
-        assertEquals(questions.get(2).getSequence(), 1);
+        assertThat(questions.get(0).getSequence()).isEqualTo(2);
+        assertThat(questions.get(1).getSequence()).isEqualTo(0);
+        assertThat(questions.get(2).getSequence()).isEqualTo(1);
     }
 
     @Test

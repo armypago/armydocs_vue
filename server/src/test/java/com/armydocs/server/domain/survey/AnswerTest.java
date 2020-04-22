@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.util.Arrays;
 import java.util.List;
 
-import static org.junit.jupiter.api.Assertions.*;
+import static org.assertj.core.api.Assertions.*;
 
 @Transactional
 @SpringBootTest
@@ -40,9 +40,9 @@ class AnswerTest {
         User answerUser = em.find(User.class, answer.getId().getUid());
         Question answerQuestion = em.find(Question.class, answer.getId().getQid());
 
-        assertEquals(answerUser, user);
-        assertEquals(answerQuestion, question);
-        assertEquals(answer.getAnswerContent(), "육류");
+        assertThat(answerUser).isEqualTo(user);
+        assertThat(answerQuestion).isEqualTo(question);
+        assertThat(answer.getAnswerContent()).isEqualTo("육류");
     }
 
     private User getUser(){
